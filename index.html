@@ -1,22 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Awesome Weather App</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.10/css/weather-icons.min.css"
+    />
     <link rel="stylesheet" href="style.css" />
-</head>
-<body class="application-body">
+  </head>
+  <body class="application-body">
     <header class="application-header">
-        <h1 class ="header-text"> Welcome to the Awesome Weather Dashboard</h1>
+      <div class="h1-container d-flex bg-light justify-content-center">
+        <h1 class="header-text">Welcome to the Awesome Weather Dashboard</h1>
+      </div>
     </header>
-<main class="application-main">
-    
-</main>
-    
-    <script src="./script.js"></script>   
+    <main class="application-main">
+      <div class="container-fluid">
+        <div class="row page-content align-items-center">
+            <div class="col-sm-4 bg-light p-3">
+              <div class="form-container text-center">
+                <form id="search-form">
+                  <label for="search-input" class="h4 font-weight-bold text-dark">
+                    Please look up a city!
+                  </label>
+                  <div class="input-group mt-3">
+                    <input
+                      type="text"
+                      id="search-input"
+                      name="search-input"
+                      class="form-control form-control-lg rounded"
+                    />
+                    <div class="input-group-append">
+                      <button
+                        type="submit"
+                        class="btn btn-primary rounded-right search-button"
+                      >
+                        <span class="glyphicon glyphicon-search"></span>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div id="search-history-container" class="mt-3"></div>
+            </div>
+            <div class="container-fluid p-5">
+                <div class="row">
+                  <div class="col-sm-8 p-0">
+                    <div id="current-weather-container" class="row mb-3">
+                      <div class="current-title-container">
+                        <h2 id="current-title" class="current-title d-inline font-weight-bold"></h2>
+                        <img id="current-weather-icon" class="d-inline weather-icon" src="" alt="Weather Icon">
+                      </div>
+                      <p class="current-temperature text-primary font-weight-bold" id="current-temperature"></p>
+                      <div class="d-flex justify-content-between mt-3">
+                        <p class="current-humidity" id="current-humidity"></p>
+                        <p class="current-wind-speed" id="current-wind-speed"></p>
+                      </div>
+                      <p class="current-uv-index mt-3" id="current-uv-index"></p>
+                      <p class="current-number rounded" id="current-number"></p>
+                    </div>
+                    <div class="container-fluid my-5">
+                        <h2 class="text-center mb-3">Here is the 5 Day Forecast</h2>
+                        <div class="row">
+                          <div class="col-sm-2 future-card text-center">
+                            <p class="future-date font-weight-bold mb-3" id="future-date-1"></p>
+                            <img id="future-icon-1" src="" alt="weather icon" class="mb-3">
+                            <p class="future-temp" id="future-temp-1"></p>
+                            <p class="future-humidity" id="future-humidity-1"></p>
+                          </div>
+                          <div class="col-sm-2 future-card text-center">
+                            <p class="future-date font-weight-bold mb-3" id="future-date-2"></p>
+                            <img id="future-icon-2" src="" alt="weather icon" class="mb-3">
+                            <p class="future-temp" id="future-temp-2"></p>
+                            <p class="future-humidity" id="future-humidity-2"></p>
+                          </div>
+                          <div class="col-sm-2 future-card text-center">
+                            <p class="future-date font-weight-bold mb-3" id="future-date-3"></p>
+                            <img id="future-icon-3" src="" alt="weather icon" class="mb-3">
+                            <p class="future-temp" id="future-temp-3"></p>
+                            <p class="future-humidity" id="future-humidity-3"></p>
+                          </div>
+                          <div class="col-sm-2 future-card text-center">
+                            <p class="future-date font-weight-bold mb-3" id="future-date-4"></p>
+                            <img id="future-icon-4" src="" alt="weather icon" class="mb-3">
+                            <p class="future-temp" id="future-temp-4"></p>
+                            <p class="future-humidity" id="future-humidity-4"></p>
+                          </div>
+                          <div class="col-sm-2 future-card text-center">
+                            <p class="future-date font-weight-bold mb-3" id="future-date-5"></p>
+                            <img id="future-icon-5" src="" alt="weather icon" class="mb-3">
+                            <p class="future-temp" id="future-temp-5"></p>
+                            <p class="future-humidity" id="future-humidity-5"></p>
+                          </div>
+                        </div>
+                      </div>
+            
+          </div> 
+      </div>
+    </main>
+
+    <script src="./script.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-</body>
+  </body>
 </html>
