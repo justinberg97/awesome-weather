@@ -2,27 +2,27 @@
 let apiKey = "d91f911bcf2c0f925fb6535547a5ddc9";
 let savedSearches = [];
 
-const createSearchHistoryEntry = (cityName) => {
-  const searchHistoryEntry = $("<p>");
+var createSearchHistoryEntry = (cityName) => {
+  var searchHistoryEntry = $("<p>");
   searchHistoryEntry.addClass("past-search");
   searchHistoryEntry.text(cityName);
   return searchHistoryEntry;
 };
 
-const createSearchHistoryContainer = (searchHistoryEntry) => {
-  const searchEntryContainer = $("<div>");
+var createSearchHistoryContainer = (searchHistoryEntry) => {
+  var searchEntryContainer = $("<div>");
   searchEntryContainer.addClass("past-search-container");
   searchEntryContainer.append(searchHistoryEntry);
   return searchEntryContainer;
 };
 
-const appendSearchHistoryToContainer = (searchHistoryContainer) => {
-  const searchHistoryContainerEl = $("#search-history-container");
+var appendSearchHistoryToContainer = (searchHistoryContainer) => {
+  var searchHistoryContainerEl = $("#previous-history-container");
   searchHistoryContainerEl.append(searchHistoryContainer);
 };
 
-const updateSavedSearches = (cityName) => {
-  const previousSavedSearches = localStorage.getItem("savedSearches");
+var updateSavedSearches = (cityName) => {
+  var previousSavedSearches = localStorage.getItem("savedSearches");
   savedSearches = previousSavedSearches
     ? JSON.parse(previousSavedSearches)
     : [];
@@ -30,76 +30,76 @@ const updateSavedSearches = (cityName) => {
   localStorage.setItem("savedSearches", JSON.stringify(savedSearches));
 };
 
-const resetSearchInput = () => {
+var resetSearchInput = () => {
   $("#search-input").val("");
 };
 
 // make list of previously searched cities
 var searchHistoryList = (cityName) => {
   $(".past-search:contains(" + cityName + ")").remove();
-  const searchHistoryEntry = createSearchHistoryEntry(cityName);
-  const searchHistoryContainer =
+  var searchHistoryEntry = createSearchHistoryEntry(cityName);
+  var searchHistoryContainer =
     createSearchHistoryContainer(searchHistoryEntry);
   appendSearchHistoryToContainer(searchHistoryContainer);
   updateSavedSearches(cityName);
   resetSearchInput();
 };
 
-const getSavedSearchHistory = () => localStorage.getItem("savedSearches");
+var getSavedSearchHistory = () => localStorage.getItem("savedSearches");
 
-const parseSavedSearchHistory = (savedSearchHistory) =>
+var parseSavedSearchHistory = (savedSearchHistory) =>
   savedSearchHistory ? JSON.parse(savedSearchHistory) : false;
 
 // load saved search history entries into search history container
 var loadSearchHistory = () => {
-  const savedSearchHistory = getSavedSearchHistory();
-  const parsedSavedSearchHistory = parseSavedSearchHistory(savedSearchHistory);
+  var savedSearchHistory = getSavedSearchHistory();
+  var parsedSavedSearchHistory = parseSavedSearchHistory(savedSearchHistory);
   if (!parsedSavedSearchHistory) {
     return false;
   }
   parsedSavedSearchHistory.forEach(searchHistoryList);
 };
 
-var currentWeatherSection = async function (cityName) {
+var todayWeatherSection = async function (cityName) {
   try {
-    const response = await fetch(
+    var response = await fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`
     );
-    const { coord } = await response.json();
-    const oneCallResponse = await fetch(
+    var { coord } = await response.json();
+    var oneCallResponse = await fetch(
       `https://api.openweathermap.org/data/2.5/onecall?lat=${coord.lat}&lon=${coord.lon}&exclude=minutely,hourly,alerts&units=imperial&appid=${apiKey}`
     );
-    const weatherData = await oneCallResponse.json();
+    var weatherData = await oneCallResponse.json();
 
     searchHistoryList(cityName);
 
-    const currentWeatherContainer = $("#current-weather-container");
-    currentWeatherContainer.addClass("current-weather-container");
+    var currentWeatherContainer = $("#today-weather-container");
+    currentWeatherContainer.addClass("today-weather-container");
 
-    const currentTitle = $("#current-title");
-    const currentDay = moment().format("M/D/YYYY");
+    var currentTitle = $("#current-title");
+    var currentDay = moment().format("M/D/YYYY");
     currentTitle.text(`${cityName} (${currentDay})`);
 
-    const currentIcon = $("#current-weather-icon");
+    var currentIcon = $("#current-weather-icon");
     currentIcon.addClass("current-weather-icon");
-    const currentIconCode = weatherData.current.weather[0].icon;
+    var currentIconCode = weatherData.current.weather[0].icon;
     currentIcon.attr(
       "src",
       `https://openweathermap.org/img/wn/${currentIconCode}@2x.png`
     );
 
-    const currentTemperature = $("#current-temperature");
+    var currentTemperature = $("#current-temperature");
     currentTemperature.text(`Temperature: ${weatherData.current.temp} \u00B0F`);
 
-    const currentHumidity = $("#current-humidity");
+    var currentHumidity = $("#current-humidity");
     currentHumidity.text(`Humidity: ${weatherData.current.humidity}%`);
 
-    const currentWindSpeed = $("#current-wind-speed");
+    var currentWindSpeed = $("#current-wind-speed");
     currentWindSpeed.text(`Wind Speed: ${weatherData.current.wind_speed} MPH`);
 
-    const currentUvIndex = $("#current-uv-index");
+    var currentUvIndex = $("#current-uv-index");
     currentUvIndex.text("UV Index: ");
-    const currentNumber = $("#current-number");
+    var currentNumber = $("#current-number");
     currentNumber.text(weatherData.current.uvi);
 
     if (weatherData.current.uvi <= 2) {
@@ -112,24 +112,24 @@ var currentWeatherSection = async function (cityName) {
   } catch (err) {
     $("#search-input").val("");
     alert(
-      "We could not find the city you searched for. Try searching for a valid city."
+      "No luck, try again!."
     );
   }
 };
 
-const fiveDayForecastSection = async (cityName) => {
-  const weatherResponse = await fetch(
+var fiveDayForecastSection = async (cityName) => {
+  var weatherResponse = await fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`
   );
-  const weatherData = await weatherResponse.json();
+  var weatherData = await weatherResponse.json();
 
-  const cityLon = weatherData.coord.lon;
-  const cityLat = weatherData.coord.lat;
+  var cityLon = weatherData.coord.lon;
+  var cityLat = weatherData.coord.lat;
 
-  const forecastResponse = await fetch(
+  var forecastResponse = await fetch(
     `https://api.openweathermap.org/data/2.5/onecall?lat=${cityLat}&lon=${cityLon}&exclude=minutely,hourly,alerts&units=imperial&appid=${apiKey}`
   );
-  const forecastData = await forecastResponse.json();
+  var forecastData = await forecastResponse.json();
 
   console.log(forecastData);
 
@@ -156,12 +156,12 @@ const fiveDayForecastSection = async (cityName) => {
   }
 };
 
-const handleFormSubmit = (cityName) => {
+var handleFormSubmit = (cityName) => {
   if (!cityName) {
     alert("Please enter name of city.");
     return;
   }
-  currentWeatherSection(cityName);
+  todayWeatherSection(cityName);
   fiveDayForecastSection(cityName);
 };
 
@@ -170,7 +170,7 @@ $("#search-form").on("submit", (event) => {
   handleFormSubmit($("#search-input").val());
 });
 
-$("#search-history-container").on("click", "p", function () {
+$("#previous-history-container").on("click", "p", function () {
   handleFormSubmit($(this).text());
   $(this).remove();
 });
