@@ -1,5 +1,5 @@
 // global variables
-let apiKey = "d91f911bcf2c0f925fb6535547a5ddc9";
+let apiKey = "879ab931ba9c327586dda3cbb343f7c6";
 let savedSearches = [];
 
 var createSearchHistoryEntry = (cityName) => {
